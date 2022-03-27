@@ -2,11 +2,11 @@ namespace ProjetoConsultaBolsista
 {
     public class Bolsista
     {
-        public string Nome { get; set; }
-        public string CPF { get; set; }
-        public string  EntidadeDeEnsino { get; set; }
-        public double ValorDaBolsa { get; set; }
-        public int AnoQueRecebeu { get; set; }
+        public string Nome { get; }
+        public string CPF { get; }
+        public string  EntidadeDeEnsino { get; }
+        public double ValorDaBolsa { get; }
+        public int AnoQueRecebeu { get; }
         public Bolsista(string nome, string cpf, string entidadeDeEnsino, double valorDaBolsa, int anoQueRecebeu){
             Nome = nome;
             CPF = cpf;

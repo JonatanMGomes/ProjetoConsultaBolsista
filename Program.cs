@@ -29,22 +29,65 @@
                 }
                 contador++;
             }
+             string escolhaDoMenu;
+             Console.WriteLine("Seja bem vindo ao nosso sistema!");
+             do{
+                Console.WriteLine("O que deseja fazer? Escolha uma das opções:");
+                Console.WriteLine("1 = Consultar bolsista Zero do ano desejado.");
+                Console.WriteLine("2 = Consultar valor médio das bolsas do ano desejado.");
+                Console.WriteLine("3 = Consultar lista das 3 bolsas de maior e menor valor.");
+                Console.WriteLine("4 = Finalizar consultas e sair do programa.");
+                escolhaDoMenu = Console.ReadLine();
+                switch(escolhaDoMenu){
+                    case "1":
+                    DescobreBolsistaZeroDoAno(bolsistas);
+                    break;
+                    case "2":
+                    ValorMedioDasBolsasNoAno(bolsistas);
+                    break;
+                    case "3":
+                    RankearBolsasTresMaisETresMenos(bolsistas);
+                    break;
+                    case "4":
+                    Console.WriteLine("Obrigado por utilizar nosso sistema!");
+                    break;
+                    default:
+                    Console.WriteLine("Opção inválida!");
+                    break;
+                }
+            } while(escolhaDoMenu != "4");
         }
         public static void DescobreBolsistaZeroDoAno(List<Bolsista> bolsistas){
             Console.WriteLine("Deseja saber quem foi o bolsista zero de qual ano? Ex: 2015");
             int anoEscolhido = int.Parse(Console.ReadLine());
             var bolsistaZero = bolsistas.Find(zero => zero.AnoQueRecebeu == anoEscolhido);
             Console.WriteLine($"O bolsista zero no ano de {anoEscolhido} é:");
-            Console.WriteLine($"{bolsistaZero.Nome}, CPF: {bolsistaZero.CPF}, para estudar na: {bolsistaZero.EntidadeDeEnsino} e com uma bolsa no valor de {bolsistaZero.ValorDaBolsa}");
+            Console.WriteLine($"{bolsistaZero.Nome}, CPF: {bolsistaZero.CPF}, para estudar na: {bolsistaZero.EntidadeDeEnsino} e com uma bolsa no valor de R$ {bolsistaZero.ValorDaBolsa}");
         }
         public static void CriptografarNome(){
 
         }
-        public static void ValorMedioDasBolsasNoAno(){
-
+        public static void ValorMedioDasBolsasNoAno(List<Bolsista> bolsistas){
+            Console.WriteLine("Quer saber o valor médio das bolsas de que ano? Ex: 2016");
+            int anoEscolhido = int.Parse(Console.ReadLine());
+            double valorTotal = 0;
+            for(int contador = 0; contador < bolsistas.Count(); contador++){
+                if(bolsistas[contador].AnoQueRecebeu == anoEscolhido){
+                    valorTotal = valorTotal+(bolsistas[contador].ValorDaBolsa);
+                }
+            }
+            Console.WriteLine($"O valor médio das bolsas no ano de {anoEscolhido} é de: R$ {valorTotal/bolsistas.Count()}");
         }
-        public static void RankearBolsasTresMaisETresMenos(){
-
+        public static void RankearBolsasTresMaisETresMenos(List<Bolsista> bolsistas){
+            var bolsistasOrdemValorCrescente = bolsistas.OrderBy(bolsistasValor => bolsistasValor.ValorDaBolsa);
+            Console.WriteLine("Os bolsistas com as 3 bolsas de menor valor são:");
+            for(int contador = 0; contador < 3; contador++){
+                Console.WriteLine($"{bolsistasOrdemValorCrescente.ElementAt(contador).Nome}, com o valor de: R$ {bolsistasOrdemValorCrescente.ElementAt(contador).ValorDaBolsa}");
+            }
+            Console.WriteLine("Os bolsistas com as 3 bolsas de maior valor são:");
+            for(int contador = (bolsistasOrdemValorCrescente.Count()-1); contador >= (bolsistasOrdemValorCrescente.Count()-3); contador--){
+                Console.WriteLine($"{bolsistasOrdemValorCrescente.ElementAt(contador).Nome}, com o valor de: R$ {bolsistasOrdemValorCrescente.ElementAt(contador).ValorDaBolsa}");
+            }
         }
 
     }
