@@ -7,12 +7,16 @@ namespace ProjetoConsultaBolsista
         public string  EntidadeDeEnsino { get; }
         public double ValorDaBolsa { get; }
         public int AnoQueRecebeu { get; }
+        public bool CodificarNome { get; private set; }
         public Bolsista(string nome, string cpf, string entidadeDeEnsino, double valorDaBolsa, int anoQueRecebeu){
             Nome = nome;
             CPF = cpf;
             EntidadeDeEnsino = entidadeDeEnsino;
             ValorDaBolsa = valorDaBolsa;
             AnoQueRecebeu = anoQueRecebeu; 
+        }
+        public void PrecisaCodificarNome(){
+            CodificarNome = true;
         }
     }
 }

@@ -32,6 +32,7 @@ namespace ProjetoConsultaBolsista
                 }
                 contador++;
             }
+            bolsistas[0].PrecisaCodificarNome();
             string escolhaDoMenu;
             Console.WriteLine("Seja bem vindo ao nosso sistema!");
             do
@@ -56,7 +57,7 @@ namespace ProjetoConsultaBolsista
                         RankearBolsasTresMaisETresMenos(bolsistas);
                         break;
                     case "4":
-                        BuscaBolsistaPorNome();
+                        BuscaBolsistaPorNome(bolsistas);
                         break;
                     case "5":
                         Console.WriteLine("Obrigado por utilizar nosso sistema!");
@@ -78,7 +79,7 @@ namespace ProjetoConsultaBolsista
                 {
                     var bolsistaZero = bolsistas.Find(zero => zero.AnoQueRecebeu == anoEscolhido);
                     Console.WriteLine($"O bolsista zero no ano de {anoEscolhido} é:");
-                    Console.WriteLine($"{bolsistaZero.Nome}, CPF: {bolsistaZero.CPF}, para estudar na: {bolsistaZero.EntidadeDeEnsino} e com uma bolsa no valor de R$ {bolsistaZero.ValorDaBolsa}");
+                    Console.WriteLine($"Nome :{bolsistaZero.Nome}, CPF: {bolsistaZero.CPF}, para estudar na: {bolsistaZero.EntidadeDeEnsino} e com uma bolsa no valor de R$ {bolsistaZero.ValorDaBolsa}");
                 }
                 else
                 {
@@ -91,14 +92,21 @@ namespace ProjetoConsultaBolsista
             }
 
         }
-        public static void BuscaBolsistaPorNome()
+        public static void BuscaBolsistaPorNome(List<Bolsista> bolsistas)
         {
             Console.WriteLine("Qual o nome do Bolsista que deseja procurar? Pode ser completo ou não.");
             string nomeABuscar = Console.ReadLine();
             //Console.WriteLine(CriptografarNome(nomeABuscar));
-            string nomeTeste = RemoveAcentos(nomeABuscar);
-            Console.WriteLine(nomeTeste);
-            //var bolsistaProcurado = bolsistas.Find(zero => zero.AnoQueRecebeu == anoEscolhido);
+            string nomeABuscarSemAcentos = RemoveAcentos(nomeABuscar);
+            nomeABuscarSemAcentos = nomeABuscarSemAcentos.ToUpper();
+            //Console.WriteLine(nomeABuscarSemAcentos);
+            var bolsistaDesejado = bolsistas.Find(desejado => (desejado.Nome.Contains(nomeABuscarSemAcentos) == true));
+            if(bolsistaDesejado.CodificarNome == true){
+                Console.WriteLine("Este bolsista, por motivos de segurança, tem nome codificado. Seguem os dados:");
+                Console.WriteLine($"Nome: {CriptografarNome(bolsistaDesejado.Nome)}, Recebeu bolsa no ano de: {bolsistaDesejado.AnoQueRecebeu}, Na entidade: {bolsistaDesejado.EntidadeDeEnsino} e com valor de: {bolsistaDesejado.ValorDaBolsa}");
+            } else{
+                Console.WriteLine($"Nome: {bolsistaDesejado.Nome}, Recebeu bolsa no ano de: {bolsistaDesejado.AnoQueRecebeu}, Na entidade: {bolsistaDesejado.EntidadeDeEnsino} e com valor de: {bolsistaDesejado.ValorDaBolsa}");
+            }
         }
         public static string CriptografarNome(string nomeACodificar)
         {
